@@ -7,10 +7,13 @@ from pygame.sprite import RenderUpdates
 import sys
 import time
 
+#Colors used in the program 
 BLUE = (106, 159, 181)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
-GREEN = (0, 255, 0)
+GREEN = (0, 204, 0)
+GREY = (128, 128, 128)
+BLACK = (0, 0, 0)
 
 
 def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
@@ -77,7 +80,6 @@ class UIElement(Sprite):
         """ Draws element onto a surface """
         surface.blit(self.image, self.rect)
 
-
 class Player:
     """ Stores information about a player """
 
@@ -99,21 +101,31 @@ def main():
 
         if game_state == GameState.NEWGAME:
             player = Player()
-            game_state = play_level(screen, player)
+            game_state = level_1(screen, player)
 
-        if game_state == GameState.NEXT_LEVEL:
+        if game_state == GameState.NEXT_LEVEL_2:
             player.current_level += 1
             game_state = level_2(screen, player)
+
+        if game_state == GameState.NEXT_LEVEL_3:
+          player.current_level += 1
+          game_state = level_3(screen, player)
         
-        #if game_state == GameState.BETWEEN:
-          #  game_state = between_levels(screen)
+        if game_state == GameState.BETWEEN:
+            game_state = between_levels(screen)
+
+        if game_state == GameState.FAIL_SCREEN1:
+          game_state = fail_screen1(screen)
+
+        if game_state == GameState.FAIL_SCREEN2:
+          game_state = fail_screen2(screen)
 
         if game_state == GameState.QUIT:
             pygame.quit()
             return
 
 
-def title_screen(screen):
+def title_screen(screen): # Title Screen 
     title_btn = UIElement(
       center_position = (400,200),
       font_size = 50,
@@ -143,8 +155,84 @@ def title_screen(screen):
 
     return game_loop(screen, buttons)
 
+def fail_screen1(screen): # Fail Screen for Level 1
+    title_btn = UIElement(
+      center_position = (400,200),
+      font_size = 30,
+      bg_rgb = RED,
+      text_rgb = WHITE,
+      text = "You touched the button didn't you...",
+      action = None,
+    )
+    startAgain_btn = UIElement(
+        center_position=(400, 350),
+        font_size=30,
+        bg_rgb= BLUE,
+        text_rgb= WHITE,
+        text="Restart",
+        action=GameState.NEWGAME,
+    )
+    quit_btn = UIElement(
+        center_position=(400, 450),
+        font_size=30,
+        bg_rgb= BLUE,
+        text_rgb= WHITE,
+        text="Quit",
+        action=GameState.QUIT,
+    )
+    return_btn = UIElement(
+        center_position = (400, 400),
+        font_size = 30, 
+        bg_rgb = BLUE,
+        text_rgb = WHITE,
+        text = "Return to Home",
+        action = GameState.TITLE,
+    )
 
-def play_level(screen, player):
+    buttons = RenderUpdates(title_btn, startAgain_btn, quit_btn, return_btn)
+
+    return game_loop(screen, buttons)
+
+def fail_screen2(screen): # Fail Screen for Level 2
+    title_btn = UIElement(
+      center_position = (400,200),
+      font_size = 30,
+      bg_rgb = RED,
+      text_rgb = WHITE,
+      text = "Really Dig Deep... You Can Do It",
+      action = None,
+    )
+    startAgain_btn = UIElement(
+        center_position=(400, 350),
+        font_size=30,
+        bg_rgb= BLUE,
+        text_rgb= WHITE,
+        text="Restart",
+        action=GameState.NEWGAME,
+    )
+    quit_btn = UIElement(
+        center_position=(400, 450),
+        font_size=30,
+        bg_rgb= BLUE,
+        text_rgb= WHITE,
+        text="Quit",
+        action=GameState.QUIT,
+    )
+    return_btn = UIElement(
+        center_position = (400, 400),
+        font_size = 30, 
+        bg_rgb = BLUE,
+        text_rgb = WHITE,
+        text = "Return to Home",
+        action = GameState.TITLE,
+    )
+
+    buttons = RenderUpdates(title_btn, startAgain_btn, quit_btn, return_btn)
+
+    return game_loop(screen, buttons)
+
+
+def level_1(screen, player): # Level 1
     return_btn = UIElement(
         center_position=(50, 570),
         font_size=20,
@@ -160,7 +248,7 @@ def play_level(screen, player):
         bg_rgb=BLUE,
         text_rgb=WHITE,
         text=f"Next level ({player.current_level + 1})",
-        action=GameState.NEXT_LEVEL,
+        action=GameState.NEXT_LEVEL_2,
     )
   
     currentlevel_btn = UIElement(
@@ -178,7 +266,7 @@ def play_level(screen, player):
         bg_rgb = RED,
         text_rgb = WHITE,
         text = "DO NOT PRESS",
-        action = GameState.QUIT,
+        action = GameState.FAIL_SCREEN1,
     )
     
     green_btn = UIElement(
@@ -187,19 +275,17 @@ def play_level(screen, player):
       bg_rgb = GREEN,
       text_rgb = WHITE,
       text = "Press",
-      action = GameState.NEXT_LEVEL,
+      action = GameState.NEXT_LEVEL_2,
     )
    # for i in range(0,1):
       #play_level.green_btn.hide()#print(green_btn) #button.hide()???
      # time.sleep(1)
-     
-      
 
     buttons = RenderUpdates(return_btn, nextlevel_btn, currentlevel_btn, red_btn, green_btn)
 
     return game_loop(screen, buttons)
 
-def level_2(screen, player):
+def level_2(screen, player): # Level 2
   return_btn = UIElement(
         center_position=(50, 570),
         font_size=20,
@@ -214,7 +300,7 @@ def level_2(screen, player):
         bg_rgb=BLUE,
         text_rgb=WHITE,
         text=f"Next level ({player.current_level + 1})",
-        action=GameState.NEXT_LEVEL,
+        action=GameState.NEXT_LEVEL_3,
     )
   currentlevel_btn = UIElement(
         center_position = (120,20),
@@ -230,7 +316,7 @@ def level_2(screen, player):
         bg_rgb = BLUE, 
         text_rgb = WHITE,
         text = "Click the answer: ",
-        action = GameState.NEXT_LEVEL,
+        action = GameState.NEXT_LEVEL_3,
   )
   equation_btn = UIElement(
         center_position = (350, 250),
@@ -241,52 +327,83 @@ def level_2(screen, player):
         action = None,
   )
   eqAnswer1_btn = UIElement(
-        center_position = (150, 325),
+        center_position = (150, 375),
         font_size = 30,
         bg_rgb = BLUE,
         text_rgb = WHITE,
-        text = "0",
-        action = None,
+        text = "94",
+        action = GameState.FAIL_SCREEN2,
   )
   eqAnswer2_btn = UIElement(
         center_position = (250, 350),
         font_size = 30,
         bg_rgb = BLUE,
         text_rgb = WHITE,
-        text = "1",
-        action = None,
+        text = "61",
+        action = GameState.FAIL_SCREEN2,
   )
   eqAnswer3_btn = UIElement(
-        center_position = (350, 325),
+        center_position = (350, 375),
         font_size = 30,
         bg_rgb = BLUE,
         text_rgb = WHITE,
-        text = "5",
-        action = None,
+        text = "-95",
+        action = GameState.FAIL_SCREEN2,
   )
   eqAnswer4_btn = UIElement(
         center_position = (450, 350),
         font_size = 30,
         bg_rgb = BLUE,
         text_rgb = WHITE,
-        text = "10",
-        action = None,
+        text = "-94",
+        action = GameState.FAIL_SCREEN2,
   )
   eqAnswer5_btn = UIElement(
-        center_position = (550, 325),
+        center_position = (550, 375),
         font_size = 30,
         bg_rgb = BLUE,
         text_rgb = WHITE,
         text = "20",
-        action = None,
+        action = GameState.FAIL_SCREEN2,
   )
   
   buttons = RenderUpdates(return_btn, nextlevel_btn, currentlevel_btn, answer_btn, equation_btn, eqAnswer1_btn, eqAnswer2_btn,eqAnswer3_btn, eqAnswer4_btn, eqAnswer5_btn)
 
   return game_loop(screen, buttons)
 
-"""def between_levels(screen):
-   continue_btn = UIElement(
+def level_3(screen, player): # Level 3
+  return_btn = UIElement(
+        center_position=(50, 570),
+        font_size=20,
+        bg_rgb=BLUE,
+        text_rgb=WHITE,
+        text="Return",
+        action=GameState.TITLE,
+    )
+  nextlevel_btn = UIElement(
+        center_position=(670, 570),
+        font_size=20,
+        bg_rgb=BLUE,
+        text_rgb=WHITE,
+        text=f"Next level ({player.current_level + 1})",
+        action=GameState.NEXT_LEVEL_3,
+    )
+  currentlevel_btn = UIElement(
+        center_position = (120,20),
+        font_size = 20,
+        bg_rgb = BLUE,
+        text_rgb = WHITE,
+        text = f"Current level ({player.current_level})",
+        action = None,
+    )
+  
+  buttons = RenderUpdates(return_btn, nextlevel_btn, currentlevel_btn)
+
+  return game_loop(screen, buttons)
+
+
+def between_levels(screen):
+  continue_btn = UIElement(
         center_position=(400, 350),
         font_size=30,
         bg_rgb=BLUE,
@@ -294,7 +411,7 @@ def level_2(screen, player):
         text="Continue",
         action=GameState.NEXT_LEVEL,
   )
-    next_btn = UIElement(
+  next_btn = UIElement(
         center_position = (400,200),
         font_size = 50,
         bg_rgb = BLUE,
@@ -303,7 +420,7 @@ def level_2(screen, player):
         action = None,
   )
 
-    quit_btn = UIElement(
+  quit_btn = UIElement(
         center_position=(400, 450),
         font_size=30,
         bg_rgb=BLUE,
@@ -312,10 +429,10 @@ def level_2(screen, player):
         action=GameState.QUIT,
     )
 
-    buttons = RenderUpdates(next_btn, continue_btn, quit_btn)
+  buttons = RenderUpdates(next_btn, continue_btn, quit_btn)
 
-    return game_loop(screen, buttons)
-"""
+  return game_loop(screen, buttons)
+
 def game_loop(screen, buttons):
     """ Handles game loop until an action is return by a button in the
         buttons sprite renderer.
@@ -343,8 +460,11 @@ class GameState(Enum):
     QUIT = -1
     TITLE = 0
     NEWGAME = 1
-    NEXT_LEVEL = 2
-
+    NEXT_LEVEL_2 = 2
+    NEXT_LEVEL_3 = 3
+    FAIL_SCREEN1 = 4
+    FAIL_SCREEN2 = 5
+    BETWEEN = 6
 
 if __name__ == "__main__":
     main()
