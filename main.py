@@ -233,7 +233,7 @@ def level_2(screen, player):
         action = GameState.NEXT_LEVEL,
   )
   equation_btn = UIElement(
-        center_position = (400, 250),
+        center_position = (350, 250),
         font_size = 30,
         bg_rgb = BLUE, 
         text_rgb = WHITE, 
@@ -241,15 +241,47 @@ def level_2(screen, player):
         action = None,
   )
   eqAnswer1_btn = UIElement(
-        center_position = (400, 350),
+        center_position = (150, 325),
         font_size = 30,
         bg_rgb = BLUE,
         text_rgb = WHITE,
         text = "0",
         action = None,
   )
-
-  buttons = RenderUpdates(return_btn, nextlevel_btn, currentlevel_btn, answer_btn, equation_btn, eqAnswer1_btn)
+  eqAnswer2_btn = UIElement(
+        center_position = (250, 350),
+        font_size = 30,
+        bg_rgb = BLUE,
+        text_rgb = WHITE,
+        text = "1",
+        action = None,
+  )
+  eqAnswer3_btn = UIElement(
+        center_position = (350, 325),
+        font_size = 30,
+        bg_rgb = BLUE,
+        text_rgb = WHITE,
+        text = "5",
+        action = None,
+  )
+  eqAnswer4_btn = UIElement(
+        center_position = (450, 350),
+        font_size = 30,
+        bg_rgb = BLUE,
+        text_rgb = WHITE,
+        text = "10",
+        action = None,
+  )
+  eqAnswer5_btn = UIElement(
+        center_position = (550, 325),
+        font_size = 30,
+        bg_rgb = BLUE,
+        text_rgb = WHITE,
+        text = "20",
+        action = None,
+  )
+  
+  buttons = RenderUpdates(return_btn, nextlevel_btn, currentlevel_btn, answer_btn, equation_btn, eqAnswer1_btn, eqAnswer2_btn,eqAnswer3_btn, eqAnswer4_btn, eqAnswer5_btn)
 
   return game_loop(screen, buttons)
 
