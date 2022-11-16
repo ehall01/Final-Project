@@ -5,6 +5,7 @@ from pygame.rect import Rect
 from enum import Enum
 from pygame.sprite import RenderUpdates
 import sys
+import time
 
 BLUE = (106, 159, 181)
 WHITE = (255, 255, 255)
@@ -102,10 +103,10 @@ def main():
 
         if game_state == GameState.NEXT_LEVEL:
             player.current_level += 1
-            game_state = play_level(screen, player)
+            game_state = level_2(screen, player)
         
-        if game_state == GameState.BETWEEN:
-            game_state = between_levels(screen)
+        #if game_state == GameState.BETWEEN:
+          #  game_state = between_levels(screen)
 
         if game_state == GameState.QUIT:
             pygame.quit()
@@ -179,7 +180,7 @@ def play_level(screen, player):
         text = "DO NOT PRESS",
         action = GameState.QUIT,
     )
-
+    
     green_btn = UIElement(
       center_position = (600,300),
       font_size = 40,
@@ -188,31 +189,67 @@ def play_level(screen, player):
       text = "Press",
       action = GameState.NEXT_LEVEL,
     )
+   # for i in range(0,1):
+      #play_level.green_btn.hide()#print(green_btn) #button.hide()???
+     # time.sleep(1)
+     
+      
 
     buttons = RenderUpdates(return_btn, nextlevel_btn, currentlevel_btn, red_btn, green_btn)
 
     return game_loop(screen, buttons)
 
-def level_1(screen, player):
-  red_btn = UIElement(
-        center_position = (200,300),
-        font_size = 40,
-        bg_rgb = RED,
+def level_2(screen, player):
+  return_btn = UIElement(
+        center_position=(50, 570),
+        font_size=20,
+        bg_rgb=BLUE,
+        text_rgb=WHITE,
+        text="Return",
+        action=GameState.TITLE,
+    )
+  nextlevel_btn = UIElement(
+        center_position=(670, 570),
+        font_size=20,
+        bg_rgb=BLUE,
+        text_rgb=WHITE,
+        text=f"Next level ({player.current_level + 1})",
+        action=GameState.NEXT_LEVEL,
+    )
+  currentlevel_btn = UIElement(
+        center_position = (120,20),
+        font_size = 20,
+        bg_rgb = BLUE,
         text_rgb = WHITE,
-        text = "DO NOT PRESS",
-        action = GameState.QUIT,
+        text = f"Current level ({player.current_level})",
+        action = None,
     )
+  answer_btn = UIElement(
+        center_position = (300, 150),
+        font_size = 40,
+        bg_rgb = BLUE, 
+        text_rgb = WHITE,
+        text = "Click the answer: ",
+        action = GameState.NEXT_LEVEL,
+  )
+  equation_btn = UIElement(
+        center_position = (400, 250),
+        font_size = 30,
+        bg_rgb = BLUE, 
+        text_rgb = WHITE, 
+        text = "1 + 2 + 3 - 5 * 20 = _____",
+        action = None,
+  )
+  eqAnswer1_btn = UIElement(
+        center_position = (400, 350),
+        font_size = 30,
+        bg_rgb = BLUE,
+        text_rgb = WHITE,
+        text = "0",
+        action = None,
+  )
 
-  green_btn = UIElement(
-      center_position = (600,300),
-      font_size = 40,
-      bg_rgb = GREEN,
-      text_rgb = WHITE,
-      text = "Press",
-      action = GameState.NEXT_LEVEL,
-    )
-
-  buttons = RenderUpdates(red_btn, green_btn)
+  buttons = RenderUpdates(return_btn, nextlevel_btn, currentlevel_btn, answer_btn, equation_btn, eqAnswer1_btn)
 
   return game_loop(screen, buttons)
 
