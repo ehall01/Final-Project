@@ -1,0 +1,7 @@
+setup.py
+EandRFinal/__init__.py
+EandRFinal/main.py
+EandRFinal.egg-info/PKG-INFO
+EandRFinal.egg-info/SOURCES.txt
+EandRFinal.egg-info/dependency_links.txt
+EandRFinal.egg-info/top_level.txt

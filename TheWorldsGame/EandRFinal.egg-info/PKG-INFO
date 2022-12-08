@@ -1,0 +1,17 @@
+Metadata-Version: 1.1
+Name: EandRFinal
+Version: 0.1.6
+Summary: A game to tease your brain.
+Home-page: UNKNOWN
+Author: Emma Hall
+Author-email: <elohall01@gmail.com>
+License: UNKNOWN
+Description: This game resembles the Impossible Quiz. We added our own spin on it using the PyGame library.
+Keywords: python,simpleCalpackage
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Education
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: MacOS :: MacOS X
+Classifier: Operating System :: Microsoft :: Windows
